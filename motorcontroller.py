@@ -3,8 +3,7 @@ slowspeed = 10.
 fastspeed = 100.
 speed = slowspeed
 
-#one timeinit of gui
-top = Tkinter.Tk()
+
 
 # one time init of io
 GPIO.setwarnings(False)
@@ -22,13 +21,23 @@ q=GPIO.PWM(21, speed)
 a=GPIO.PWM(24,speed)
 b=GPIO.PWM(26,speed)
 
+def setSpeed(newSpeed):
+    global speed
+    speed = float(newSpeed)
+    print speed
+    print newSpeed
+
+def getSpeed():
+    global speed
+    return speed
+
 # start up pwms
 def startPwm():
   p.start(0)
   q.start(0)
   a.start(0)
   b.start(0)
-  def forwards():
+def forwards():
   global speed
   print speed
   p.ChangeDutyCycle(speed)

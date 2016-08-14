@@ -1,6 +1,10 @@
 import Tkinter
 import tkMessageBox
 import motorcontroller as mc
+
+#one timeinit of gui
+top = Tkinter.Tk()
+
 """
 import RPi.GPIO as GPIO, sys, threading, time
 
@@ -34,13 +38,6 @@ def startPwm():
   q.start(0)
   a.start(0)
   b.start(0)
-
-#set slider speed
-def setSpeed(value):
-  global speed
-  speed = float(value)
-  print speed
-  print value
 
 def forwards():
   global speed
@@ -137,14 +134,14 @@ def createButtons():
 
   L = Tkinter.Label(top,text="speed changer")
   L.grid(row=3,column=0)                    
-  Slider = Tkinter.Scale(top, width=5,length=300,from_=speed, to=100, orient=Tkinter.HORIZONTAL, command = setSpeed)
-  Slider.set(speed)
+  Slider = Tkinter.Scale(top, width=5,length=300,from_=mc.getSpeed(), to=100, orient=Tkinter.HORIZONTAL, command = mc.setSpeed)
+  Slider.set(mc.getSpeed())
   Slider.grid(row=3,column=1,columnspan=3)
 
-print speed
+
 
 createButtons()
-startPwm()
+mc.startPwm()
 
 top.mainloop()
 
