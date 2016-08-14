@@ -1,10 +1,4 @@
-import Tkinter
-import tkMessageBox
-import motorcontroller as mc
-"""
 import RPi.GPIO as GPIO, sys, threading, time
-
-# glbal speed variable
 slowspeed = 10.
 fastspeed = 100.
 speed = slowspeed
@@ -34,15 +28,7 @@ def startPwm():
   q.start(0)
   a.start(0)
   b.start(0)
-
-#set slider speed
-def setSpeed(value):
-  global speed
-  speed = float(value)
-  print speed
-  print value
-
-def forwards():
+  def forwards():
   global speed
   print speed
   p.ChangeDutyCycle(speed)
@@ -106,46 +92,3 @@ def getInnerSpeed(speed):
     return 0
   else:
     return speed/2
-"""
-def createButtons():
-  B = Tkinter.Button(top, text ="forwards", command = mc.forwards)
-  B.grid(row=0,column=1)
-  
-  B = Tkinter.Button(top, text ="backwards", command = mc.backwards)
-  B.grid(row=2,column=1)
-  
-  B = Tkinter.Button(top, text ="left", command = mc.left)
-  B.grid(row=1, column=0)
-  
-  B = Tkinter.Button(top, text ="right", command = mc.right)
-  B.grid(row=1, column=2)
-  
-  B = Tkinter.Button(top, text ="veer right", command = mc.veerRight)
-  B.grid(row=0, column=2)
-  
-  B = Tkinter.Button(top, text ="veer left", command = mc.veerLeft)
-  B.grid(row=0, column=0)
-  
-  B = Tkinter.Button(top, text ="veer  back right", command = mc.veerBackRight)
-  B.grid(row=2, column=2)
-  
-  B = Tkinter.Button(top, text ="veer back left", command = mc.veerBackLeft)
-  B.grid(row=2, column=0)
-  
-  B = Tkinter.Button(top, text ="stop", command = mc.stop)
-  B.grid(row=1, column=1)
-
-  L = Tkinter.Label(top,text="speed changer")
-  L.grid(row=3,column=0)                    
-  Slider = Tkinter.Scale(top, width=5,length=300,from_=speed, to=100, orient=Tkinter.HORIZONTAL, command = setSpeed)
-  Slider.set(speed)
-  Slider.grid(row=3,column=1,columnspan=3)
-
-print speed
-
-createButtons()
-startPwm()
-
-top.mainloop()
-
-GPIO.cleanup()
