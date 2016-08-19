@@ -17,20 +17,14 @@ span {font-weight: bold;}
     // do an ajax request to server to change LED state
     function() 
     {
-        $('#flip-1').change(function() 
+        $('button').click( function() 
         {
-        $.getJSON('/_led', {state: $('#flip-1').val()});
+            console.log(event.target.id);
+        $.getJSON('/_command', {action: event.target.id});
         });     
     }
     );
 
-function goF() 
-    {
-        $('#flip-1').change(function() 
-        {
-        $.getJSON('/_led', {state: $('#flip-1').val()});
-        });     
-    }
 
 
 </script>
@@ -42,14 +36,19 @@ function goF()
   <div data-role="header">
     <div><h3>Raspberry Pi Web Control</h3></div>
   </div>
-<button type="button" onclick="goF()">Click Me!</button>
+<button type="button" id="forward" >forwards</button>
+<button type="button" id="backward">backwards</button>
+<button type="button" id="right">right</button>
+<button type="button" id="left">left</button>
+<button type="button" id="vright">vright</button>
+<button type="button" id="vleft">vleft</button>
+<button type="button" id="stop">stop</button>
+<button type="button" id="vbleft">vbleft</button>
+<button type="button" id="vbright">vbright</button>
   <div data-role="content">
     <form>
     <p>The button is <span id="buttonState"></span></p>
     <br>
-    <select name="flip-1" id="flip-1" data-role="slider" style="float: left;">
-        <option value="off">LED off</option>
-        <option value="on">LED on</option>
     </select>
     </form>
   </div>

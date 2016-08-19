@@ -7,17 +7,39 @@ app = Flask(__name__)
 # return index page when IP address of RPi is typed in the browser
 @app.route("/")
 def Index():
-    return render_template("index.html", uptime="work to do")
+    return render_template("index.html", uptime="")
 
 # ajax GET call this function to set led state
 # depeding on the GET parameter sent
-@app.route("/_led")
-def _led():
-    state = request.args.get('state')
-    if state=="on":
+@app.route("/_command")
+def command():
+    action = request.args.get('action')
+    print action
+    if action=="forward":
         mc.forwards()
-    else:
+    elif action == "stop":
         mc.stop()
+    elif action == "vleft":
+        mc.veerLeft()
+    elif action == "vright":
+        mc.veerRight()
+    elif action == "right":
+        mc.right()
+    elif action == "left":
+        mc.left()
+    elif action == "vbleft":
+        mc.veerBackLeft()
+    elif action == "vbright":
+        mc.veerBackRight()
+    elif action == "backward":
+        mc.backwards()
+
+
+
+
+
+    else:
+        print "what was that, huh???" + action
     return ""
 
 

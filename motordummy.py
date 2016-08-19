@@ -26,30 +26,30 @@ def forwards():
 
 def backwards():
     global speed
-    print "forwards called "# + speed
+    print "backwards called "# + speed
 
 def left():
     global speed
-    print "forwards called "# + speed
+    print "left called "# + speed
   
 def right():
     global speed
-    print "forwards called "# + speed
+    print "right called "# + speed
   
 def stop():
-    print "forwards called "# + speed
+    print "stop called " + str(speed)
   
 def veerRight():
-    print "forwards called "# + speed
+    print "veer right called "# + speed
   
 def veerLeft():
-    print "forwards called "# + speed
+    print "veer left called "# + speed
 
 def veerBackRight():
-    print "forwards called "# + speed
+    print "veer Back right called "# + speed
   
 def veerBackLeft():
-    print "forwards called "# + speed
+    print "veer back left called "# + speed
 
 def getInnerSpeed(speed):
     global slowspeed
