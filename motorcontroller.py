@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO, sys, threading, time
-slowspeed = 10.
+slowspeed = 50.
 fastspeed = 100.
 speed = slowspeed
 

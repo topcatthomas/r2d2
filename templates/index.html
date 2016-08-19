@@ -20,7 +20,8 @@ span {font-weight: bold;}
         $('button').click( function() 
         {
             console.log(event.target.id);
-        $.getJSON('/_command', {action: event.target.id});
+            console.log($("#speed").val())
+        $.getJSON('/_command', {action: event.target.id, speed: $("#speed").val()});
         });     
     }
     );
@@ -45,6 +46,7 @@ span {font-weight: bold;}
 <button type="button" id="stop">stop</button>
 <button type="button" id="vbleft">vbleft</button>
 <button type="button" id="vbright">vbright</button>
+<input id="speed" type="range" min="20" max="100" step="1" value="50"/>
   <div data-role="content">
     <form>
     <p>The button is <span id="buttonState"></span></p>

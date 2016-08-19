@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 #import motorcontroller as mc
-import motorcontroller as mc
+import motordummy as mc
 
 app = Flask(__name__)
 
@@ -14,7 +14,10 @@ def Index():
 @app.route("/_command")
 def command():
     action = request.args.get('action')
+    speed = request.args.get('speed')
     print action
+    print speed
+    mc.setSpeed(speed)
     if action=="forward":
         mc.forwards()
     elif action == "stop":
@@ -40,7 +43,7 @@ def command():
 
     else:
         print "what was that, huh???" + action
-    return ""
+    return "hi there"
 
 
 # run the webserver on standard port 80, requires sudo
