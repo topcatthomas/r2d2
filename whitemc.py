@@ -24,6 +24,9 @@ atexit.register(turnOffMotors)
 def startPwm():
     mh = Adafruit_MotorHAT(addr=0x60)
 
+def cleanup():
+    turnOffMotors();
+
 def setSpeed(newSpeed):
     global speed
     speed = int(newSpeed)*2
