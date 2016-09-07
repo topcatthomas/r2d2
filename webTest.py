@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
-#import motorcontroller as mc
-import motordummy as mc
+
+import injectioncontroller
+mc = injectioncontroller.importMotor();
 
 app = Flask(__name__)
 

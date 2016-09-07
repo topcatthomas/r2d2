@@ -12,7 +12,8 @@
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit",
                 "RedirectOutput"
-            ]
+            ],
+            "args": ["-mmotordummy"]
         },
         {
             "name": "Python Console App",
