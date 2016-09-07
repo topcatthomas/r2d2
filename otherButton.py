@@ -48,4 +48,4 @@ mc.startPwm()
 
 top.mainloop()
 
-GPIO.cleanup()
+mc.cleanup()

@@ -51,3 +51,5 @@ def command():
 if __name__ == "__main__":
     mc.startPwm()
     app.run(host='0.0.0.0', port=80, debug=True)
+    mc.cleanup()
+

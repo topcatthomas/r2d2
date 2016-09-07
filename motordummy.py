@@ -19,6 +19,9 @@ def getSpeed():
 def startPwm():
     print "startPwm called"
 
+def cleanup():
+    print "cleanup called"
+
 def forwards():
     global speed
     print speed

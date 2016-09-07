@@ -37,6 +37,11 @@ def startPwm():
   q.start(0)
   a.start(0)
   b.start(0)
+
+def cleanup():
+  print "cleanup called"
+  GPIO.cleanup()
+
 def forwards():
   global speed
   print speed
