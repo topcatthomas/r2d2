@@ -13,7 +13,8 @@
                 "WaitOnNormalExit",
                 "RedirectOutput"
             ],
-            "args": ["-mmotordummy"]
+            "args": ["-mmotordummy"],
+             "externalConsole" : true
         },
         {
             "name": "Python Console App",
