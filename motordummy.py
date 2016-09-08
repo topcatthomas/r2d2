@@ -3,7 +3,10 @@ slowspeed = 10.
 fastspeed = 100.
 speed = slowspeed
 
-
+def doMove(x,y):
+    print 'doMove called'
+    print x
+    print y
 
 def setSpeed(newSpeed):
     global speed

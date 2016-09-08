@@ -37,6 +37,21 @@ def getSpeed():
     global speed
     return float(speed)
 
+def doMove(x,y):
+  print 'doing a gen move'
+  print x
+  print y
+  var leftbit = 1-x
+  var rightbit = x
+  leftMotor.setSpeed(leftbit*255*(abs(y-0.5)))
+  rightMotor.setSpeed(rightbit*255*(abs(y-0.5)))
+  if ( y > 0.5 ):
+    leftMotor.run(Adafruit_MotorHAT.FORWARD);
+    rightMotor.run(Adafruit_MotorHAT.FORWARD);
+  else:
+    leftMotor.run(Adafruit_MotorHAT.BACKWARD);
+    rightMotor.run(Adafruit_MotorHAT.BACKWARD);
+
 def backwards():
   global speed
   print 'doing forwards'
