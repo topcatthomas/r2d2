@@ -1,0 +1,43 @@
+<!doctype html>
+<head>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+</head>
+
+<style>
+h3, h4 {text-align: center;}
+span {font-weight: bold;}
+</style>
+
+<script type=text/javascript>
+
+    $(
+    // When the LED button is pressed (change)
+    // do an ajax request to server to change LED state
+    function() 
+    {
+        $('#controllerCanvas').css('background-color', 'rgba(255,0,0, 0.2)');
+
+        $('#controllerCanvas').mousedown( function(e) 
+        {
+            console.log("canvas mouse down");
+            var offset = $(this).offset();
+            $.getJSON('/_canvas', { x: (e.pageX - offset.left) / ($(this).width()),y: (e.pageY - offset.top) / ($(this).height())});
+        });
+        
+             
+    }
+    );
+
+
+
+</script>
+
+<div data-role="page" data-theme="b">
+  <div data-role="header">
+    <div><h3>Raspberry Pi Web Control</h3></div>
+  </div>
+<canvas id="controllerCanvas" width="250" height="250"></canvas>
+</div>
