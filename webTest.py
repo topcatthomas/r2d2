@@ -10,6 +10,19 @@ app = Flask(__name__)
 def Index():
     return render_template("index.html", uptime="")
 
+@app.route("/canvascontroller.html")
+def canvascontroller():
+    return render_template("canvascontroller.html")
+
+@app.route("/_canvas")
+def canvas():
+    x = request.args.get('x')
+    y = request.args.get('y')
+    print x
+    print y
+    mc.doMove(x,y)
+    return "hi there"
+
 # ajax GET call this function to set led state
 # depeding on the GET parameter sent
 @app.route("/_command")

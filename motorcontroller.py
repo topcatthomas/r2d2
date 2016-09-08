@@ -42,6 +42,11 @@ def cleanup():
   print "cleanup called"
   GPIO.cleanup()
 
+def doMove(x,y):
+  print 'doing a gen move'
+  print x
+  print y
+
 def forwards():
   global speed
   print speed
