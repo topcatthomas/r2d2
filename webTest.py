@@ -10,10 +10,13 @@ app = Flask(__name__)
 def Index():
     return render_template("index.html", uptime="")
 
+#return canvas click type controller
 @app.route("/canvascontroller.html")
 def canvascontroller():
     return render_template("canvascontroller.html")
 
+# ajax call to do a general xy move
+# where y 0,1 1/2 is stop, x left right
 @app.route("/_canvas")
 def canvas():
     x = request.args.get('x')
@@ -23,7 +26,7 @@ def canvas():
     mc.doMove(x,y)
     return "hi there"
 
-# ajax GET call this function to set led state
+# ajax GET call this function to do robot action
 # depeding on the GET parameter sent
 @app.route("/_command")
 def command():
