@@ -9,7 +9,9 @@ def importMotor():
         sys.exit(2)
 
   if len(opts) == 1:
+    print "trying to import " + opts[0][1]
     mc = importlib.import_module(opts[0][1])
   else:
+    print "default import of motorcontroller"
     import motorcontroller as mc
   return mc

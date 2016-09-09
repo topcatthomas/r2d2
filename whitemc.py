@@ -38,9 +38,7 @@ def getSpeed():
     return float(speed)
 
 def doMove(x,y):
-  print 'doing a gen move'
-  print x
-  print y
+  print 'doMove called x=' + str(x) + ' y=' + str(y)
   var leftbit = 1-x
   var rightbit = x
   leftMotor.setSpeed(leftbit*255*(abs(y-0.5)))
@@ -54,8 +52,7 @@ def doMove(x,y):
 
 def backwards():
   global speed
-  print 'doing forwards'
-  print speed
+  print "backwards called " + str(speed)
   leftMotor.setSpeed(speed)
   leftMotor.run(Adafruit_MotorHAT.FORWARD);
   rightMotor.setSpeed(speed)
@@ -63,6 +60,7 @@ def backwards():
 
 def forwards():
   global speed
+  print "forwards called " + str(speed)
   leftMotor.setSpeed(speed)
   leftMotor.run(Adafruit_MotorHAT.BACKWARD);
   rightMotor.setSpeed(speed)
@@ -70,6 +68,7 @@ def forwards():
 
 def left():
   global speed
+  print "left called " + str(speed)
   leftMotor.setSpeed(speed)
   leftMotor.run(Adafruit_MotorHAT.FORWARD);
   rightMotor.setSpeed(0)
@@ -77,34 +76,44 @@ def left():
   
 def right():
   global speed
+  print "right called " + str(speed)
   leftMotor.setSpeed(0)
   leftMotor.run(Adafruit_MotorHAT.FORWARD);
   rightMotor.setSpeed(speed)
   rightMotor.run(Adafruit_MotorHAT.FORWARD);
   
 def stop():
+  print "stop called " + str(speed)
   leftMotor.setSpeed(0)
   rightMotor.setSpeed(0)
   
 def veerRight():
+  global speed
+  print "veerRight called " + str(speed)
   leftMotor.setSpeed(0)
   leftMotor.run(Adafruit_MotorHAT.FORWARD);
   rightMotor.setSpeed(getInnerSpeed(speed))
   rightMotor.run(Adafruit_MotorHAT.FORWARD);
   
 def veerLeft():
+  global speed
+  print "veerLeft called " + str(speed)
   rightMotor.setSpeed(0)
   leftMotor.run(Adafruit_MotorHAT.FORWARD);
   lefttMotor.setSpeed(getInnerSpeed(speed))
   rightMotor.run(Adafruit_MotorHAT.FORWARD);
 
 def veerBackRight():
+  global speed
+  print "veerBackRight called " + str(speed)
   rightMotor.setSpeed(0)
   leftMotor.run(Adafruit_MotorHAT.BACKWARD);
   lefttMotor.setSpeed(getInnerSpeed(speed))
   rightMotor.run(Adafruit_MotorHAT.BACKWARD);
   
 def veerBackLeft():
+  global speed
+  print "veerBackLeft called " + str(speed)
   leftMotor.setSpeed(0)
   leftMotor.run(Adafruit_MotorHAT.BACKWARD);
   rightMotor.setSpeed(getInnerSpeed(speed))
@@ -112,6 +121,8 @@ def veerBackLeft():
 
 def getInnerSpeed(speed):
   global slowspeed
+  global speed
+  print "getInnerSpeed called " + str(speed)
   if (speed/2<slowspeed):
     return 0
   else:

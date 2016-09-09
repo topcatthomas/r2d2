@@ -43,13 +43,11 @@ def cleanup():
   GPIO.cleanup()
 
 def doMove(x,y):
-  print 'doing a gen move'
-  print x
-  print y
+  print 'doing a gen move x=' + str(x) + " y=" + str(y)
 
 def forwards():
   global speed
-  print speed
+  print "forwards called " + str(speed)
   p.ChangeDutyCycle(speed)
   q.ChangeDutyCycle(0)
   a.ChangeDutyCycle(speed)
@@ -57,6 +55,7 @@ def forwards():
 
 def backwards():
   global speed
+  print "backwards called " + str(speed)
   q.ChangeDutyCycle(speed)
   p.ChangeDutyCycle(0)
   b.ChangeDutyCycle(speed)
@@ -64,6 +63,7 @@ def backwards():
 
 def left():
   global speed
+  print "left called " + str(speed)
   p.ChangeDutyCycle(speed)
   q.ChangeDutyCycle(0)
   a.ChangeDutyCycle(0)
@@ -71,41 +71,53 @@ def left():
   
 def right():
   global speed
+  print "right called " + str(speed)
   a.ChangeDutyCycle(speed)
   q.ChangeDutyCycle(0)
   p.ChangeDutyCycle(0)
   b.ChangeDutyCycle(0)
   
 def stop():
+  print "stop called " + str(speed)
   p.ChangeDutyCycle(0)
   q.ChangeDutyCycle(0)
   a.ChangeDutyCycle(0)
   b.ChangeDutyCycle(0)
   
 def veerRight():
+  global speed
+  print "veerRight called " + str(speed)
   p.ChangeDutyCycle(getInnerSpeed(speed))
   q.ChangeDutyCycle(0)
   a.ChangeDutyCycle(speed)
   b.ChangeDutyCycle(0)
   
 def veerLeft():
+  global speed
+  print "veerLeft called " + str(speed)
   a.ChangeDutyCycle(getInnerSpeed(speed))
   q.ChangeDutyCycle(0)
   p.ChangeDutyCycle(speed)
   b.ChangeDutyCycle(0)
 
 def veerBackRight():
+  global speed
+  print "veerBackRight called " + str(speed)
   q.ChangeDutyCycle(getInnerSpeed(speed))
   p.ChangeDutyCycle(0)
   b.ChangeDutyCycle(speed)
   a.ChangeDutyCycle(0)
   
 def veerBackLeft():
+  global speed
+  print "veerBackLeft called " + str(speed)
   q.ChangeDutyCycle(getInnerSpeed(speed))
   a.ChangeDutyCycle(0)
   b.ChangeDutyCycle(speed)
   p.ChangeDutyCycle(0)
+
 def getInnerSpeed(speed):
+  global speed
   global slowspeed
   if (speed/2<slowspeed):
     return 0
