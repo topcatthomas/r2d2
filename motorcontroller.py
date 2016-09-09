@@ -42,9 +42,6 @@ def cleanup():
   print "cleanup called"
   GPIO.cleanup()
 
-def doMove(x,y):
-  print 'doing a gen move x=' + str(x) + " y=" + str(y)
-
 def forwards():
   global speed
   print "forwards called " + str(speed)
@@ -123,3 +120,38 @@ def getInnerSpeed(speed):
     return 0
   else:
     return speed/2
+
+def doMove(xs,ys):
+  print 'doing a gen move x=' + str(x) + " y=" + str(y)
+  x = float(xs)
+  y = float(ys)
+  print x
+  print y
+  if ( abs(y-0.5) < 0.1 and abs(x-0.5) < 0.1):
+    stop()
+  else:
+    leftbit = 1-x
+    rightbit = x
+    absbit = 4*abs(y-0.5)
+    print "absbit "+str(absbit)
+    print "leftbit "+str(leftbit)
+    print "rightbit "+str(rightbit)
+    leftSpeed = int(leftbit*100*absbit)
+    rightSpeed = int(rightbit*100*absbit)
+    if ( leftSpeed > 100 ):
+       leftSpeed = 100
+    if ( rightSpeed > 100 ):
+       rightSpeed = 100
+    print "leftSpeed "+str(leftSpeed)
+    print "rightSpeed "+str(rightSpeed)
+    if ( y > 0.5 ):
+      q.ChangeDutyCycle(leftSpeed)
+      p.ChangeDutyCycle(0)
+      b.ChangeDutyCycle(rightSpeed)
+      a.ChangeDutyCycle(0)
+    else:
+      p.ChangeDutyCycle(leftSpeed)
+      q.ChangeDutyCycle(0)
+      a.ChangeDutyCycle(rightSpeed)
+      b.ChangeDutyCycle(0)
+    

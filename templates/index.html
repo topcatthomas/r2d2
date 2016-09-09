@@ -10,11 +10,19 @@
 h3, h4 {text-align: center;}
 span {font-weight: bold;}
 </style>
-
+//yourname
 <script type=text/javascript>
+$("thenameplace").ready(
+    function() 
+    {
+    yourName = prompt("What is your name?");
+
+      $("#thenameplace").html("This is "+yourName+"'s robot");
+    }
+    ); 
+
+
     $(
-    // When the LED button is pressed (change)
-    // do an ajax request to server to change LED state
     function() 
     {
         $('button').click( function() 
@@ -49,12 +57,12 @@ span {font-weight: bold;}
 <input id="speed" type="range" min="20" max="100" step="1" value="50"/>
   <div data-role="content">
     <form>
-    <p>The button is <span id="buttonState"></span></p>
+ <div data-role="footer">
+    <div><h4 id="thenameplace">This is 's robot</h4></div>
+  </div>
+    <p> <span id="buttonState"></span></p>
     <br>
     </select>
     </form>
-  </div>
- <div data-role="footer">
-    <div><h4>This Raspberry Pi has been {{uptime}}</h4></div>
   </div>
 </div>
