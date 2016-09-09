@@ -146,8 +146,6 @@ def doMove(xs,ys):
        rightSpeed = 100
     print "leftSpeed "+str(leftSpeed)
     print "rightSpeed "+str(rightSpeed)
-    leftMotor.setSpeed(leftSpeed)
-    rightMotor.setSpeed(rightSpeed)
     if ( y > 0.5 ):
       p.ChangeDutyCycle(leftSpeed)
       q.ChangeDutyCycle(0)
