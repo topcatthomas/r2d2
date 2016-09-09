@@ -111,3 +111,46 @@ def getInnerSpeed(speed):
     return 0
   else:
     return speed/2
+
+
+
+
+
+
+
+
+
+
+
+
+def doMove(xs,ys):
+  print 'doing a gen move'
+  x = float(xs)
+  y = float(ys)
+  print x
+  print y
+  if ( abs(y-0.5) < 0.1 and abs(x-0.5) < 0.1):
+    stop()
+  else:
+    leftbit = 1-x
+    rightbit = x
+    absbit = 4*abs(y-0.5)
+    print "absbit "+str(absbit)
+    print "leftbit "+str(leftbit)
+    print "rightbit "+str(rightbit)
+    leftSpeed = int(leftbit*255*absbit)
+    rightSpeed = int(rightbit*255*absbit)
+    if ( leftSpeed > 255 ):
+       leftSpeed = 255
+    if ( rightSpeed > 255 ):
+       rightSpeed = 255
+    print "leftSpeed "+str(leftSpeed)
+    print "rightSpeed "+str(rightSpeed)
+    leftMotor.setSpeed(leftSpeed)
+    rightMotor.setSpeed(rightSpeed)
+    if ( y > 0.5 ):
+      leftMotor.run(mc.forward);
+      rightMotor.run(mc.forward);
+    else:
+      leftMotor.run(mc.backward);
+      rightMotor.run(mc.backward);
