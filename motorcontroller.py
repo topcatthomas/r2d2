@@ -138,19 +138,24 @@ def doMove(xs,ys):
     print "absbit "+str(absbit)
     print "leftbit "+str(leftbit)
     print "rightbit "+str(rightbit)
-    leftSpeed = int(leftbit*255*absbit)
-    rightSpeed = int(rightbit*255*absbit)
-    if ( leftSpeed > 255 ):
-       leftSpeed = 255
-    if ( rightSpeed > 255 ):
-       rightSpeed = 255
+    leftSpeed = int(leftbit*100*absbit)
+    rightSpeed = int(rightbit*100*absbit)
+    if ( leftSpeed > 100 ):
+       leftSpeed = 100
+    if ( rightSpeed > 100 ):
+       rightSpeed = 100
     print "leftSpeed "+str(leftSpeed)
     print "rightSpeed "+str(rightSpeed)
     leftMotor.setSpeed(leftSpeed)
     rightMotor.setSpeed(rightSpeed)
     if ( y > 0.5 ):
-      leftMotor.run(mc.forward);
-      rightMotor.run(mc.forward);
+      p.ChangeDutyCycle(leftSpeed)
+      q.ChangeDutyCycle(0)
+      a.ChangeDutyCycle(rightSpeed)
+      b.ChangeDutyCycle(0)      
     else:
-      leftMotor.run(mc.backward);
-      rightMotor.run(mc.backward);
+      q.ChangeDutyCycle(leftSpeed)
+      p.ChangeDutyCycle(0)
+      b.ChangeDutyCycle(rightSpeed)
+      a.ChangeDutyCycle(0)
+    
