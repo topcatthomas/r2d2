@@ -38,11 +38,9 @@ def getSpeed():
     return float(speed)
 
 def doMove(xs,ys):
-  print 'doMove called x=' + str(x) + ' y=' + str(y)
   x = float(xs)
   y = float(ys)
-  print x
-  print y
+  print 'doMove called x=' + str(x) + ' y=' + str(y)
   if ( abs(y-0.5) < 0.1 and abs(x-0.5) < 0.1):
     stop()
   else:

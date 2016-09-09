@@ -45,5 +45,30 @@ mc.backwards()
 threading._sleep(1)
 mc.stop()
 
+mc.setSpeed(50)
+mc.right()
+threading._sleep(3)
+mc.stop()
+
+mc.setSpeed(50)
+mc.left()
+threading._sleep(3)
+mc.stop()
+
+
+mc.setSpeed(100)
+mc.right()
+threading._sleep(2)
+mc.stop()
+
+mc.setSpeed(100)
+mc.left()
+threading._sleep(3)
+mc.stop()
+
+mc.doMove(0.5,0)
+threading._sleep(2)
+mc.stop()
+
 
 mc.cleanup()
