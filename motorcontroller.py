@@ -114,7 +114,6 @@ def veerBackLeft():
   p.ChangeDutyCycle(0)
 
 def getInnerSpeed(speed):
-  global speed
   global slowspeed
   if (speed/2<slowspeed):
     return 0

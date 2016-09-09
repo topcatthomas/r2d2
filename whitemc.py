@@ -140,7 +140,6 @@ def veerBackLeft():
 
 def getInnerSpeed(speed):
   global slowspeed
-  global speed
   print "getInnerSpeed called " + str(speed)
   if (speed/2<slowspeed):
     return 0
