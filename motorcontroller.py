@@ -29,10 +29,12 @@ def setSpeed(newSpeed):
 
 def getSpeed():
     global speed
+    print "getspeed called " + str(speed)
     return speed
 
 # start up pwms
 def startPwm():
+  print "starting pwm"
   p.start(0)
   q.start(0)
   a.start(0)
@@ -121,11 +123,9 @@ def getInnerSpeed(speed):
     return speed/2
 
 def doMove(xs,ys):
-  print 'doing a gen move x=' + str(x) + " y=" + str(y)
   x = float(xs)
   y = float(ys)
-  print x
-  print y
+  print 'doing a gen move x=' + str(x) + " y=" + str(y)
   if ( abs(y-0.5) < 0.1 and abs(x-0.5) < 0.1):
     stop()
   else:

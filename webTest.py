@@ -50,11 +50,6 @@ def command():
         mc.veerBackRight()
     elif action == "backward":
         mc.backwards()
-
-
-
-
-
     else:
         print "what was that, huh???" + action
     return "hi there"
