@@ -10,10 +10,10 @@ slowspeed = 50.
 fastspeed = 100.
 speed = slowspeed
 
-leftMotorP1 = 0
-leftMotorP2 = 0
-rightMotorP1 = 0
-rightMotorP2 = 0
+leftMotorP1 = None
+leftMotorP2 = None
+rightMotorP1 = None
+rightMotorP2 = None
 
 def setSpeed(newSpeed):
     global speed
