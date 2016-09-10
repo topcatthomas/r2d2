@@ -48,6 +48,35 @@ def backwards():
   run(LEFTMOTOR,BACKWARD,speed)
   run(RIGHTMOTOR,BACKWARD,speed)
 
+def doMove(xs,ys):
+  x = float(xs)
+  y = float(ys)
+  print 'doing a gen move x=' + str(x) + " y=" + str(y)
+  if ( abs(y-0.5) < 0.1 and abs(x-0.5) < 0.1):
+    stop()
+  else:
+    leftbit = 1-x
+    rightbit = x
+    absbit = 4*abs(y-0.5)
+    print "absbit "+str(absbit)
+    print "leftbit "+str(leftbit)
+    print "rightbit "+str(rightbit)
+    leftSpeed = int(leftbit*100*absbit)
+    rightSpeed = int(rightbit*100*absbit)
+    if ( leftSpeed > 100 ):
+       leftSpeed = 100
+    if ( rightSpeed > 100 ):
+       rightSpeed = 100
+    print "leftSpeed "+str(leftSpeed)
+    print "rightSpeed "+str(rightSpeed)
+    if ( y > 0.5 ):
+      run(LEFTMOTOR,FORWARD,leftSpeed)
+      run(RIGHTMOTOR,FORWARD,rightSpeed)
+    else:
+      run(LEFTMOTOR,BACKWARD,leftSpeed)
+      run(RIGHTMOTOR,BACKWARD,rightSpeed)
+    
+
 def init():
     global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
     print "init called"
