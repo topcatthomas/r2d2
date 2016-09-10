@@ -28,6 +28,7 @@ def getSpeed():
 
 # start up pwms
 def startPwm():
+    print "start pwm called"
     init()
 
 def cleanup():
@@ -49,6 +50,7 @@ def backwards():
 
 def init():
     global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
+    print "init called"
     # one time init of io
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BOARD)
