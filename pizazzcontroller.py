@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 
 FORWARD = 1
-BACWARD = 2
+BACKWARD = 2
 RIGHTMOTOR = 1
 LEFTMOTOR = 2
 
@@ -49,7 +49,7 @@ def backwards():
   run(RIGHTMOTOR,BACKWARD,speed)
 
 def init():
-    global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
+    #global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
     print "init called"
     # one time init of io
     GPIO.setwarnings(False)
@@ -63,7 +63,7 @@ def init():
     leftMotorP1=GPIO.PWM(19, freq)
     leftMotorP2=GPIO.PWM(21, freq)
     rightMotorP1=GPIO.PWM(24,freq)
-    rightMotorP1=GPIO.PWM(26,freq)
+    rightMotorP2=GPIO.PWM(26,freq)
 
 def run(motor,direction,speed):
     global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
