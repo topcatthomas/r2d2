@@ -49,7 +49,7 @@ def backwards():
   run(RIGHTMOTOR,BACKWARD,speed)
 
 def init():
-    #global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
+    global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
     print "init called"
     # one time init of io
     GPIO.setwarnings(False)
