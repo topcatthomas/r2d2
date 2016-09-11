@@ -16,21 +16,33 @@ span {font-weight: bold;}
     function popList()
     {
         var $select = $('#fileslist');
+        var selected = $("#fileslist option:selected").text();
         $.getJSON('/_getreclist', function( reclist ) {
-        console.log(reclist);
-        $select.empty();
-        $.each(reclist, function(index, value) {
-			$select.append("<option>" + value + "</option>");
-		});
-        });
+            $select.empty();
+            $.each(reclist, function(index, value) {
+			    $select.append("<option value='"+value+"'>" + value + "</option>");
+                if ( selected == "" ){
+                    selected = value;
+                }
+		    });
+            if ( selected != "" ){
+                $select.val(selected);
+            }
+       });
     }
+
+    $("#fileslist").ready(
+        function() 
+        {
+            popList();
+        }
+    ); 
 
     $(
     // When the LED button is pressed (change)
     // do an ajax request to server to change LED state
     function() 
     {
-        popList();
 
         $('#controllerCanvas').css('background-color', 'rgba(255,0,0, 0.2)');
 
@@ -73,11 +85,13 @@ span {font-weight: bold;}
 <canvas id="controllerCanvas" width="250" height="250"></canvas>
 <button type="button" id="recorder" >recon</button>
 <button type="button" id="saverec" >save</button>
-<button type="button" id="loadrec" >load</button>
 <button type="button" id="playrec" >play</button>
+<div>
+<button type="button" id="loadrec" >load</button>
 <select id="fileslist"></select>
 
   <div data-role="header">
     <div><h3>Raspberry Pi Web Control</h3></div>
   </div>
+</div>
 </div>

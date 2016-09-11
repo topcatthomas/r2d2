@@ -1,5 +1,6 @@
 import datetime, time, threading, glob
 
+directoryName = "recordings\\"
 
 start_time = time.clock()
 recordingOn = False
@@ -54,14 +55,16 @@ def playBack(mc):
 
 
 def saveRecording(filename):
-    with open(filename, 'w') as f:
+    if (len(recordedEvents) == 0):
+        return
+    with open(directoryName+filename, 'w') as f:
         for ((strtype,time),(d1,d2)) in recordedEvents:
             f.write(strtype + " " + str(time) + " " + str(d1) + " " + str(d2) + "\n")
 
 def loadRecording(filename):
     global recordedEvents,recordingOn 
     recordedEvents = []
-    with open(filename, 'r') as f:
+    with open(directoryName+filename, 'r') as f:
         for line in f:
             line.rstrip('\n')
             bit = line.split(' ')
@@ -80,7 +83,7 @@ def recordDoMove(x,y):
     recordedEvents.append((("doMove",str(timePassed)),(x,y)))
 
 def getRecList():
-    reclist = glob.glob("*.rec")
+    reclist = glob.glob1(directoryName,"*.rec")
     print "==== reclist ===="
     print reclist
     print "==== reclist ===="

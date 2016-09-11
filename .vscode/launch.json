@@ -8,22 +8,24 @@
             "stopOnEntry": true,
             "pythonPath": "${config.python.pythonPath}",
             "program": "${file}",
+            "console": "externalTerminal",
             "debugOptions": [
                 "WaitOnAbnormalExit",
-                "WaitOnNormalExit",
-                "RedirectOutput"
+                "WaitOnNormalExit"
             ],
             "args": ["-mmotordummy"],
              "externalConsole" : true
         },
         {
             "name": "Python Console App",
+            "console": "externalTerminal",
             "type": "python",
             "request": "launch",
-            "stopOnEntry": true,
+            "stopOnEntry": false,
             "pythonPath": "${config.python.pythonPath}",
             "program": "${file}",
             "externalConsole": true,
+            "args": ["-mmotordummy"],
             "debugOptions": [
                 "WaitOnAbnormalExit",
                 "WaitOnNormalExit"
