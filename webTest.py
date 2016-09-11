@@ -31,12 +31,12 @@ def playrecording():
 
 @app.route("/_saverec")
 def saverecording():
-    rec.saveRecording("test1.txt")
+    rec.saveRecording("test1.rec")
     return "saved"
 
 @app.route("/_loadrec")
 def loadrecording():
-    rec.loadRecording("test1.txt")
+    rec.loadRecording("test1.rec")
     return "loaded"
 
 # ajax call to do a general xy move
