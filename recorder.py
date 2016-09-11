@@ -1,4 +1,4 @@
-import datetime, time, threading
+import datetime, time, threading, glob
 
 
 start_time = time.clock()
@@ -6,8 +6,8 @@ recordingOn = False
 recordedEvents = []
 playBackIndex = 0
 
-def playBackHandler(mc):
-    global playBackIndex,recordedEvents
+def playBackHandler(mc,playBackIndex,recordedEvents):
+    print "playback index " + str(playBackIndex)
     ((strtype,time),(d1,d2)) = recordedEvents[playBackIndex]
     print "====="
     print recordedEvents[playBackIndex]
@@ -16,14 +16,15 @@ def playBackHandler(mc):
     print d1
     print d2
     print "====="
-    playBackIndex = playBackIndex + 1
     if ( strtype == "action" ):
         mc.playAction(d1,d2)
     elif ( strtype == "doMove" ):
         mc.doMove(d1,d2)
-    if ( playBackIndex < len(recordedEvents) ):
+    if ( playBackIndex+1 < len(recordedEvents) ):
         print 'waiting for ' + str(time)
-        threading.Timer(time, playBackHandler,[mc]).start()
+        threading.Timer(time, playBackHandler,[mc,playBackIndex+1,recordedEvents]).start()
+    else:
+        print "====PLAYBACK COMPLETE===="
 
 def recordingOnOff():
     global recordingOn 
@@ -45,9 +46,11 @@ def endRecord():
     recordingOn = False
 
 def playBack(mc):
-    global plyaBackIndex
+    global playBackIndex
+    print "playback called"
     playBackIndex = 0
-    playBackHandler(mc)
+    print "playback index is " + str(playBackIndex)
+    playBackHandler(mc,playBackIndex,recordedEvents)
 
 
 def saveRecording(filename):
@@ -76,3 +79,9 @@ def recordDoMove(x,y):
     start_time = time.clock()
     recordedEvents.append((("doMove",str(timePassed)),(x,y)))
 
+def getRecList():
+    reclist = glob.glob("*.rec")
+    print "==== reclist ===="
+    print reclist
+    print "==== reclist ===="
+    return reclist

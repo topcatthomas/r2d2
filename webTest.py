@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+import time
 import recorder as rec
 
 import injectioncontroller
@@ -31,13 +32,27 @@ def playrecording():
 
 @app.route("/_saverec")
 def saverecording():
-    rec.saveRecording("test1.rec")
-    return "saved"
+    tn = int(time.clock())
+    filename = "test"+str(tn)+".rec"
+    rec.saveRecording(filename)
+    return filename
 
 @app.route("/_loadrec")
 def loadrecording():
-    rec.loadRecording("test1.rec")
+    filename = request.args.get('filename')
+    print "loading file " + str(filename)
+    if ( not filename ):
+        rec.loadRecording("test1.rec")
+    else:
+        rec.loadRecording(filename)
     return "loaded"
+
+@app.route("/_getreclist")
+def getreclist():
+    reclist = rec.getRecList()
+    print "returning"
+    print reclist 
+    return jsonify(reclist)
 
 # ajax call to do a general xy move
 # where y 0,1 1/2 is stop, x left right

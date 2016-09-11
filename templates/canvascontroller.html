@@ -13,11 +13,25 @@ span {font-weight: bold;}
 
 <script type=text/javascript>
 
+    function popList()
+    {
+        var $select = $('#fileslist');
+        $.getJSON('/_getreclist', function( reclist ) {
+        console.log(reclist);
+        $select.empty();
+        $.each(reclist, function(index, value) {
+			$select.append("<option>" + value + "</option>");
+		});
+        });
+    }
+
     $(
     // When the LED button is pressed (change)
     // do an ajax request to server to change LED state
     function() 
     {
+        popList();
+
         $('#controllerCanvas').css('background-color', 'rgba(255,0,0, 0.2)');
 
         $('#controllerCanvas').mousedown( function(e) 
@@ -35,17 +49,19 @@ span {font-weight: bold;}
         $('#saverec').click( function() 
         {
             $.getJSON('/_saverec');
+            popList();
         });     
 
         $('#loadrec').click( function() 
         {
-            $.getJSON('/_loadrec');
+            $.getJSON('/_loadrec',{filename: $("#fileslist option:selected").text() });
         });     
 
         $('#playrec').click( function() 
         {
             $.getJSON('/_playrecording');
         });     
+
     }
     );
 
@@ -59,6 +75,7 @@ span {font-weight: bold;}
 <button type="button" id="saverec" >save</button>
 <button type="button" id="loadrec" >load</button>
 <button type="button" id="playrec" >play</button>
+<select id="fileslist"></select>
 
   <div data-role="header">
     <div><h3>Raspberry Pi Web Control</h3></div>
