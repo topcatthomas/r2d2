@@ -37,6 +37,32 @@ def getSpeed():
     global speed
     return float(speed)
 
+def playAction(action,newSpeed):
+    print 'playAction called'
+    setSpeed(newSpeed)
+    print 'deciding what to do ' + action
+    if action=="forward":
+        forwards()
+    elif action == "stop":
+        stop()
+    elif action == "vleft":
+        veerLeft()
+    elif action == "vright":
+        veerRight()
+    elif action == "right":
+        right()
+    elif action == "left":
+        left()
+    elif action == "vbleft":
+        veerBackLeft()
+    elif action == "vbright":
+        veerBackRight()
+    elif action == "backward":
+        backwards()
+    else:
+        print "what was that, huh???" + action
+
+
 def doMove(xs,ys):
   x = float(xs)
   y = float(ys)

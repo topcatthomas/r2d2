@@ -27,7 +27,25 @@ span {font-weight: bold;}
             $.getJSON('/_canvas', { x: (e.pageX - offset.left) / ($(this).width()),y: (e.pageY - offset.top) / ($(this).height())});
         });
         
-             
+        $('#recorder').click( function() 
+        {
+            $.getJSON('/_reconoff');
+        });     
+     
+        $('#saverec').click( function() 
+        {
+            $.getJSON('/_saverec');
+        });     
+
+        $('#loadrec').click( function() 
+        {
+            $.getJSON('/_loadrec');
+        });     
+
+        $('#playrec').click( function() 
+        {
+            $.getJSON('/_playrecording');
+        });     
     }
     );
 
@@ -37,6 +55,11 @@ span {font-weight: bold;}
 
 <div data-role="page" data-theme="b">
 <canvas id="controllerCanvas" width="250" height="250"></canvas>
+<button type="button" id="recorder" >recon</button>
+<button type="button" id="saverec" >save</button>
+<button type="button" id="loadrec" >load</button>
+<button type="button" id="playrec" >play</button>
+
   <div data-role="header">
     <div><h3>Raspberry Pi Web Control</h3></div>
   </div>

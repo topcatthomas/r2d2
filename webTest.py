@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, jsonify
+import recorder as rec
 
 import injectioncontroller
-mc = injectioncontroller.importMotor();
+mc = injectioncontroller.importMotor()
+
 
 app = Flask(__name__)
 
@@ -15,6 +17,28 @@ def Index():
 def canvascontroller():
     return render_template("canvascontroller.html")
 
+#ajax call to turn recording on
+@app.route("/_reconoff")
+def recon():
+    rec.recordingOnOff()
+    return "reconoff"
+
+#ajax call to play recording
+@app.route("/_playrecording")
+def playrecording():
+    rec.playBack(mc)
+    return "playing"
+
+@app.route("/_saverec")
+def saverecording():
+    rec.saveRecording("test1.txt")
+    return "saved"
+
+@app.route("/_loadrec")
+def loadrecording():
+    rec.loadRecording("test1.txt")
+    return "loaded"
+
 # ajax call to do a general xy move
 # where y 0,1 1/2 is stop, x left right
 @app.route("/_canvas")
@@ -23,6 +47,7 @@ def canvas():
     y = request.args.get('y')
     print x
     print y
+    rec.recordDoMove(x,y)
     mc.doMove(x,y)
     return "hi there"
 
@@ -34,27 +59,8 @@ def command():
     speed = request.args.get('speed')
     print action
     print speed
-    mc.setSpeed(speed)
-    if action=="forward":
-        mc.forwards()
-    elif action == "stop":
-        mc.stop()
-    elif action == "vleft":
-        mc.veerLeft()
-    elif action == "vright":
-        mc.veerRight()
-    elif action == "right":
-        mc.right()
-    elif action == "left":
-        mc.left()
-    elif action == "vbleft":
-        mc.veerBackLeft()
-    elif action == "vbright":
-        mc.veerBackRight()
-    elif action == "backward":
-        mc.backwards()
-    else:
-        print "what was that, huh???" + action
+    rec.recordAction(action,speed)
+    mc.playAction(action,speed)
     return "hi there"
 
 
