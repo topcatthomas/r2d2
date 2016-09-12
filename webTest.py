@@ -21,8 +21,7 @@ def canvascontroller():
 #ajax call to turn recording on
 @app.route("/_reconoff")
 def recon():
-    rec.recordingOnOff()
-    return "reconoff"
+    return jsonify(rec.recordingOnOff())
 
 #ajax call to play recording
 @app.route("/_playrecording")

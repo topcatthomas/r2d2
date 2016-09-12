@@ -55,7 +55,12 @@ span {font-weight: bold;}
         
         $('#recorder').click( function() 
         {
-            $.getJSON('/_reconoff');
+            $.getJSON('/_reconoff', function( state ) {
+                if (state )
+                    $('#recorder').text("Turn Recording Off");
+                else
+                    $('#recorder').text("Turn Recording On");
+            });
         });     
      
         $('#saverec').click( function() 
@@ -82,16 +87,25 @@ span {font-weight: bold;}
 </script>
 
 <div data-role="page" data-theme="b">
-<canvas id="controllerCanvas" width="250" height="250"></canvas>
-<button type="button" id="recorder" >recon</button>
-<button type="button" id="saverec" >save</button>
-<button type="button" id="playrec" >play</button>
-<div>
-<button type="button" id="loadrec" >load</button>
-<select id="fileslist"></select>
-
-  <div data-role="header">
-    <div><h3>Raspberry Pi Web Control</h3></div>
-  </div>
+    <div style="text-align:center;">
+        <canvas id="controllerCanvas" width="250" height="250"></canvas>
+    </div>
+    <div class="ui-grid-a">
+<button class="ui-block-a" type="button" id="recorder" >Turn Recording On</button>
+<button class="ui-block-b" type="button" id="saverec" >Save Current Recording</button>
 </div>
+<div>
+    <button  type="button" id="playrec" >Play Current Recording</button>
+</div>
+<div class="ui-grid-a">
+<div  class="ui-block-a">
+<select id="fileslist"></select>
+</div>
+<div class="ui-block-b" >
+<button type="button" id="loadrec" >Load Selected Recording</button>
+</div>
+</div>
+  <div data-role="header">
+    <div><h3>Raspberry Pi Canvas Web Control</h3></div>
+  </div>
 </div>
