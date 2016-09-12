@@ -76,6 +76,20 @@
             "port": 3000,
             "secret": "my_secret",
             "host": "localhost"
+        },
+         {
+            "name": "Launch localhost with sourcemaps",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost/canvascontroller.html",
+            "webRoot": "${workspaceRoot}",
+            "sourceMaps": true
+        },
+        {
+            "name": "Launch index.html (without sourcemaps)",
+            "type": "chrome",
+            "request": "launch",
+            "file": "${workspaceRoot}/"
         }
     ]
 }
