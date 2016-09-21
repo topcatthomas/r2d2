@@ -24,6 +24,7 @@ def startPwm():
 def cleanup():
     emergencyStop = True
     turnOffMotors()
+    lin.shutDown()
 
 def init():
     motor.setSpeed(speed)
@@ -38,10 +39,21 @@ def moveToPos(aPos):
         else:
             motor.run(Adafruit_MotorHAT.BACKWARD)
 
+def turnOffMotors():
+        mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+        mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+        mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+        mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+
 def testIt():
-    while ( True ):
-        newPos = int(raw_input("enter new pos\n>"))
-        if ( newPos < 0 )
-            break
-        print "moving to " + str(newPos)
-        moveToPos(newPos)
+    try:
+        init()
+        while ( True ):
+            newPos = int(raw_input("enter new pos\n>"))
+            if ( newPos < 0 )
+                break
+            print "moving to " + str(newPos)
+            moveToPos(newPos)
+        cleanup()
+    except KeyboardInterrupt:
+        cleanup()
