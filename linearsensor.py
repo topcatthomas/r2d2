@@ -1,39 +1,65 @@
 import RPi.GPIO as GPIO , datetime, time
-GPIO.setmode(GPIO.BCM)
 
-#GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-#GPIO.setup(24, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(23, GPIO.IN)
-GPIO.setup(24, GPIO.IN)
+SENSORPIN1 = 23
+SENSORPIN2 = 24
+
+position = 0
 
 start_time = time.clock()
-count24=0
-count23=0
+count1=0
+count2=0
+manualTest()
+
+def init():
+    GPIO.setup(SENSORPIN1, GPIO.IN)
+    GPIO.setup(SENSORPIN2, GPIO.IN)
+    GPIO.add_event_detect(SENSORPIN1, GPIO.BOTH, callback=eventUpdate)
+    GPIO.add_event_detect(SENSORPIN2, GPIO.BOTH, callback=eventUpdate)
+
+def shutDown():
+    GPIO.cleanup()           # clean up GPIO on normal exit
+
+def eventUpdate(channel):
+    print "eventUpdate on " + str(channel) + " position was " + str(position)
+    pin1 = GPIO.input(SENSORPIN1)
+    pin2 = GPIO.input(SENSORPIN2)
+    print "lines " + str(pin1) + " , " + str(pin2)
+    if ( channel == SENSORPIN1 ):
+        if ( pin1 != pin2 ):
+            position = position + 1
+        else:
+            position = position - 1
+    else: 
+        if ( pin1 == pin2 ):
+            position = position + 1
+        else:
+            position = position - 1
+    print "position now " + str(position)
+
+def getCurrentPos():
+    return position
+
+def manualTest():
+    try:
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(SENSORPIN1, GPIO.IN)
+        GPIO.setup(SENSORPIN2, GPIO.IN)
+        GPIO.add_event_detect(SENSORPIN1, GPIO.BOTH, callback=my_callback)
+        GPIO.add_event_detect(SENSORPIN2, GPIO.BOTH, callback=my_callback2)
+        raw_input("Press Enter when ready\n>")
+        shutDown()
+    except KeyboardInterrupt:
+        shutDown()
 
 def my_callback(channel):
-    global count24,start_time
-    count24 = count24 + 1
+    global count1,start_time
+    count1 = count1 + 1
     timePassed = time.clock()# - start_time
-    print "falling edge detected on 24 " + str(count24) + " : " + str(timePassed)
+    print "falling edge detected on 2 " + str(count1) + " : " + str(timePassed)
 
 def my_callback2(channel):
-    global count23, start_time
-    count23 = count23 + 1
+    global count2, start_time
+    count2 = count2 + 1
     timePassed = time.clock()# - start_time
-    print "falling edge detected on 23 " + str(count23) + " : " + str(timePassed)
+    print "falling edge detected on 23 " + str(count2) + " : " + str(timePassed)
 
-
-# when a falling edge is detected on port 17, regardless of whatever
-# else is happening in the program, the function my_callback will be run
-GPIO.add_event_detect(23, GPIO.FALLING, callback=my_callback)
-
-# when a falling edge is detected on port 23, regardless of whatever
-# else is happening in the program, the function my_callback2 will be run
-# 'bouncetime=300' includes the bounce control written into interrupts2a.py
-GPIO.add_event_detect(24, GPIO.FALLING, callback=my_callback2)
-
-try:
-   raw_input("Press Enter when ready\n>")
-except KeyboardInterrupt:
-    GPIO.cleanup()       # clean up GPIO on CTRL+C exit
-GPIO.cleanup()           # clean up GPIO on normal exit
