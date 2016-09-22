@@ -2,20 +2,20 @@ import sys, threading, time, atexit
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 import linearsensor as lin 
 
-
-speed = 20
+motorpin = 2
+speed = 255
 emergencyStop = False
 
 mh = Adafruit_MotorHAT(addr=0x60)
 
-motor = mh.getMotor(3)
+motor = mh.getMotor(motorpin)
 
 def turnOffMotors():
-    mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+    mh.getMotor(motorpin).run(Adafruit_MotorHAT.RELEASE)
 
 atexit.register(turnOffMotors)
 
-def emergencyStop():
+def doEmergencyStop():
     emergencyStop = True
 
 def startPwm():
@@ -31,13 +31,20 @@ def init():
     lin.init()
 
 def moveToPos(aPos):
+    print "moveToPos called " + str(aPos)
     curPos = lin.getCurrentPos()
+    print "curPos is " + str(curPos) + " ES " + str(emergencyStop)
+    lastLeft = None
     while ( curPos != aPos and not emergencyStop ):
-        goLeft = curPos < aPos
-        if ( goLeft ):
-            motor.run(Adafruit_MotorHAT.FORWARD)
-        else:
-            motor.run(Adafruit_MotorHAT.BACKWARD)
+        goLeft = curPos > aPos
+        if ( lastLeft != None and goLeft != lastLeft ):
+            break
+        if ( lastLeft == None ):
+            lastLeft = goLeft
+            if ( goLeft ):
+                motor.run(Adafruit_MotorHAT.FORWARD)
+            else:
+                motor.run(Adafruit_MotorHAT.BACKWARD)
 
 def turnOffMotors():
         mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
@@ -50,7 +57,8 @@ def testIt():
         init()
         while ( True ):
             newPos = int(raw_input("enter new pos\n>"))
-            if ( newPos < 0 )
+	    print "new pos entered was " + str(newPos)
+            if ( newPos < 0 ):
                 break
             print "moving to " + str(newPos)
             moveToPos(newPos)

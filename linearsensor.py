@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO , datetime, time
 
+GPIO.setmode(GPIO.BCM)
+
 SENSORPIN1 = 23
 SENSORPIN2 = 24
 
@@ -8,7 +10,6 @@ position = 0
 start_time = time.clock()
 count1=0
 count2=0
-manualTest()
 
 def init():
     GPIO.setup(SENSORPIN1, GPIO.IN)
@@ -20,6 +21,7 @@ def shutDown():
     GPIO.cleanup()           # clean up GPIO on normal exit
 
 def eventUpdate(channel):
+    global position
     print "eventUpdate on " + str(channel) + " position was " + str(position)
     pin1 = GPIO.input(SENSORPIN1)
     pin2 = GPIO.input(SENSORPIN2)
@@ -37,6 +39,7 @@ def eventUpdate(channel):
     print "position now " + str(position)
 
 def getCurrentPos():
+    global position
     return position
 
 def manualTest():
