@@ -2,7 +2,7 @@ import sys, threading, time, atexit
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 import linearsensor as lin 
 
-motorpin = 2
+motorpin = 3
 speed = 255
 emergencyStop = False
 
@@ -36,7 +36,9 @@ def moveToPos(aPos):
     print "curPos is " + str(curPos) + " ES " + str(emergencyStop)
     lastLeft = None
     while ( curPos != aPos and not emergencyStop ):
+        curPos = lin.getCurrentPos()
         goLeft = curPos > aPos
+        print "curPos is " + str(curPos) + " goLeft " + str(goLeft) + " lastLeft " + str(lastLeft)
         if ( lastLeft != None and goLeft != lastLeft ):
             break
         if ( lastLeft == None ):
@@ -45,6 +47,7 @@ def moveToPos(aPos):
                 motor.run(Adafruit_MotorHAT.FORWARD)
             else:
                 motor.run(Adafruit_MotorHAT.BACKWARD)
+        threading.sleep(100)
 
 def turnOffMotors():
         mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
