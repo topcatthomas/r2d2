@@ -24,9 +24,9 @@ def shutDown():
 
 def eventUpdate(channel):
     global position
-    print "eventUpdate on " + str(channel) + " position was " + str(position)
     pin1 = GPIO.input(SENSORPIN1)
     pin2 = GPIO.input(SENSORPIN2)
+    print "eventUpdate on " + str(channel) + " position was " + str(position)
     print "lines " + str(pin1) + " , " + str(pin2)
     if ( channel == SENSORPIN1 ):
         if ( pin1 != pin2 ):
