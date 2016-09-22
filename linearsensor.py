@@ -16,23 +16,21 @@ targetPosCallback = None
 def init():
     GPIO.setup(SENSORPIN1, GPIO.IN)
     GPIO.setup(SENSORPIN2, GPIO.IN)
-    GPIO.add_event_detect(SENSORPIN1, GPIO.RISING, callback=eventUpdateRising)
-    GPIO.add_event_detect(SENSORPIN1, GPIO.FALLING, callback=eventUpdateFalling)
+    GPIO.add_event_detect(SENSORPIN1, GPIO.BOTH, callback=eventUpdateRising)
 
 def shutDown():
     GPIO.cleanup()           # clean up GPIO on normal exit
 
 def eventUpdateRising(channel):
-    eventUpdate(True)
-
-def eventUpdateFalling(channel):
-    eventUpdate(False)
+    pin1 = GPIO.input(SENSORPIN1)
+    eventUpdate(pin1)
 
 def eventUpdate(isRising):
+    global targetPosCallback, targetPos
     global position
     pin2 = GPIO.input(SENSORPIN2)
     print "eventUpdate on " +str(isRising) + " position was " + str(position) + "pin2 " + str(pin2)
-    if ( isRising ):
+    if ( not isRising ):
         if ( pin2 ):
             position = position + 1
         else:
@@ -48,6 +46,7 @@ def eventUpdate(isRising):
         targetPosCallback(position)
 
 def setTargetPos(aPos,posCallback):
+    global targetPosCallback, targetPos
     targetPosCallback = posCallback
     targetPos = aPos
 

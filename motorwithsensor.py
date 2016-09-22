@@ -1,12 +1,11 @@
 import sys, threading, time, atexit
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 import linearsensor as lin 
-
 motorpin = 3
-speed = 255
+speed = 100
 emergencyStop = False
 
-mh = Adafruit_MotorHAT(addr=0x60)
+mh = Adafruit_MotorHAT(addr=0x60, freq=100)
 
 motor = mh.getMotor(motorpin)
 
@@ -19,9 +18,6 @@ def doEmergencyStop():
     emergencyStop = True
     turnOffMotors()
 
-def startPwm():
-    motor.begin(60)
-
 def cleanup():
     emergencyStop = True
     turnOffMotor()
@@ -32,13 +28,14 @@ def init():
     lin.init()
 
 def moveToPos(aPos):
+    motor.setSpeed(speed)
     print "moveToPos called " + str(aPos)
     curPos = lin.getCurrentPos()
     lin.setTargetPos(aPos,targetCallBack)
     print "curPos is " + str(curPos) + " ES " + str(emergencyStop)
     if ( curPos != aPos and not emergencyStop ):
         goLeft = curPos > aPos
-        print "curPos is " + str(curPos) + " goLeft " + str(goLeft) + " lastLeft " + str(lastLeft)
+        print "curPos is " + str(curPos) + " goLeft " + str(goLeft) 
         if ( goLeft ):
             motor.run(Adafruit_MotorHAT.FORWARD)
         else:
