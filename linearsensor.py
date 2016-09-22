@@ -29,7 +29,7 @@ def eventUpdate(isRising):
     global targetPosCallback, targetPos
     global position
     pin2 = GPIO.input(SENSORPIN2)
-    print "eventUpdate on " +str(isRising) + " position was " + str(position) + "pin2 " + str(pin2)
+    #print "eventUpdate on " +str(isRising) + " position was " + str(position) + "pin2 " + str(pin2)
     if ( not isRising ):
         if ( pin2 ):
             position = position + 1
@@ -40,7 +40,7 @@ def eventUpdate(isRising):
             position = position + 1
         else:
             position = position - 1
-    print "position now " + str(position)
+    #print "position now " + str(position)
     if ( targetPos != -1 and abs ( targetPos - position) < 10 and targetPosCallback ):
         targetPos = -1
         targetPosCallback(position)

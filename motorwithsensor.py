@@ -2,7 +2,7 @@ import sys, threading, time, atexit
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
 import linearsensor as lin 
 motorpin = 3
-speed = 100
+speed = 175
 emergencyStop = False
 
 mh = Adafruit_MotorHAT(addr=0x60, freq=100)
