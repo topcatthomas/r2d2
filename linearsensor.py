@@ -10,6 +10,8 @@ position = 0
 start_time = time.clock()
 count1=0
 count2=0
+targetPos = -1
+targetPosCallback = None
 
 def init():
     GPIO.setup(SENSORPIN1, GPIO.IN)
@@ -37,6 +39,13 @@ def eventUpdate(channel):
         else:
             position = position - 1
     print "position now " + str(position)
+    if ( targetPos != -1 and abs ( targetPos - position) < 10 and targetPosCallback ):
+        targetPos = -1
+        targetPosCallback(position)
+
+def setTargetPos(aPos,posCallback):
+    targetPosCallback = posCallback
+    targetPos = aPos
 
 def getCurrentPos():
     global position

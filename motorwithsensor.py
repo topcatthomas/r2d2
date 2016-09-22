@@ -10,20 +10,21 @@ mh = Adafruit_MotorHAT(addr=0x60)
 
 motor = mh.getMotor(motorpin)
 
-def turnOffMotors():
-    mh.getMotor(motorpin).run(Adafruit_MotorHAT.RELEASE)
+def turnOffMotor():
+    motor.run(Adafruit_MotorHAT.RELEASE)
 
-atexit.register(turnOffMotors)
+atexit.register(turnOffMotor)
 
 def doEmergencyStop():
     emergencyStop = True
+    turnOffMotors()
 
 def startPwm():
-    mh = Adafruit_MotorHAT(addr=0x60)
+    motor.begin(60)
 
 def cleanup():
     emergencyStop = True
-    turnOffMotors()
+    turnOffMotor()
     lin.shutDown()
 
 def init():
@@ -33,27 +34,19 @@ def init():
 def moveToPos(aPos):
     print "moveToPos called " + str(aPos)
     curPos = lin.getCurrentPos()
+    lin.setTargetPos(aPos,targetCallBack)
     print "curPos is " + str(curPos) + " ES " + str(emergencyStop)
-    lastLeft = None
-    while ( curPos != aPos and not emergencyStop ):
-        curPos = lin.getCurrentPos()
+    if ( curPos != aPos and not emergencyStop ):
         goLeft = curPos > aPos
         print "curPos is " + str(curPos) + " goLeft " + str(goLeft) + " lastLeft " + str(lastLeft)
-        if ( lastLeft != None and goLeft != lastLeft ):
-            break
-        if ( lastLeft == None ):
-            lastLeft = goLeft
-            if ( goLeft ):
-                motor.run(Adafruit_MotorHAT.FORWARD)
-            else:
-                motor.run(Adafruit_MotorHAT.BACKWARD)
-        threading.sleep(100)
+        if ( goLeft ):
+            motor.run(Adafruit_MotorHAT.FORWARD)
+        else:
+            motor.run(Adafruit_MotorHAT.BACKWARD)
+    lin.setTargetPos(aPos,targetCallBack)
 
-def turnOffMotors():
-        mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-        mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-        mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-        mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+def targetCallBack(pos):
+    motor.setSpeed(0)
 
 def testIt():
     try:
