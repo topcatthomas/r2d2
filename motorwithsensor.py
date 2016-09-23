@@ -1,8 +1,9 @@
 import sys, threading, time, atexit
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
-import linearsensor as lin 
+import linearsensorpigpio as lin 
 motorpin = 3
-speed = 175
+speed =175 
+slowspeed = 75
 emergencyStop = False
 
 mh = Adafruit_MotorHAT(addr=0x60, freq=100)
@@ -43,7 +44,10 @@ def moveToPos(aPos):
     lin.setTargetPos(aPos,targetCallBack)
 
 def targetCallBack(pos):
-    motor.setSpeed(0)
+    if ( pos < 2 ):
+       motor.setSpeed(0)
+    else:
+       motor.setSpeed(slowspeed)
 
 def testIt():
     try:
