@@ -83,15 +83,15 @@ def doMove(xs,ys):
 def init():
     global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
     print "init called"
-    pi.set_mode(19, pigpio.OUTPUT)
-    pi.set_mode(21, pigpio.OUTPUT)
-    pi.set_mode(24, pigpio.OUTPUT)
-    pi.set_mode(26, pigpio.OUTPUT)
+    pi.set_mode(leftMotorP1, pigpio.OUTPUT)
+    pi.set_mode(leftMotorP2, pigpio.OUTPUT)
+    pi.set_mode(rightMotorP1, pigpio.OUTPUT)
+    pi.set_mode(righttMotorP2, pigpio.OUTPUT)
     # setup pwn
-    pi.set_PWM_frequency(19, freq)
-    pi.set_PWM_frequency(21, freq)
-    pi.set_PWM_frequency(24,freq)
-    pi.set_PWM_frequency(26,freq)
+    pi.set_PWM_frequency(leftMotorP1, freq)
+    pi.set_PWM_frequency(leftMotorP2, freq)
+    pi.set_PWM_frequency(rightMotorP1,freq)
+    pi.set_PWM_frequency(righttMotorP2,freq)
 
 def right():
   global speed
