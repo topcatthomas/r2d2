@@ -48,6 +48,49 @@ def backwards():
   run(LEFTMOTOR,BACKWARD,speed)
   run(RIGHTMOTOR,BACKWARD,speed)
 
+def right():
+  global speed
+  print "right called " + str(speed)
+  run(LEFTMOTOR,FORWARD,speed)
+  run(RIGHTMOTOR,FORWARD,0)
+    
+def left():
+  global speed
+  print "right called " + str(speed)
+  run(LEFTMOTOR,FORWARD,0)
+  run(RIGHTMOTOR,FORWARD,speed)
+
+def veerRight():
+  global speed
+  print "veerRight called " + str(speed)
+  run(LEFTMOTOR,FORWARD,getInnerSpeed(speed))
+  run(RIGHTMOTOR,FORWARD,speed)
+  
+def veerLeft():
+  global speed
+  print "veerLeft called " + str(speed)
+  run(RIGHTMOTOR,FORWARD,getInnerSpeed(speed))
+  run(LEFTMOTOR,FORWARD,speed)
+
+def veerBackRight():
+  global speed
+  print "veerBackRight called " + str(speed)
+  run(LEFTMOTOR,BACKWARD,getInnerSpeed(speed))
+  run(RIGHTMOTOR,BACKWARD,speed)
+  
+def veerBackLeft():
+  global speed
+  print "veerBackLeft called " + str(speed)
+  run(RIGHTMOTOR,BACKWARD,getInnerSpeed(speed))
+  run(LEFTMOTOR,BACKWARD,speed)
+
+def getInnerSpeed(speed):
+  global slowspeed
+  if (speed/2<slowspeed):
+    return 0
+  else:
+    return speed/2
+
 def doMove(xs,ys):
   x = float(xs)
   y = float(ys)
