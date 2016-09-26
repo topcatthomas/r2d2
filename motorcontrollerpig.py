@@ -3,12 +3,14 @@ import pigpio
 #connect to pigpiod daemon
 pi = pigpio.pi()
 
+FORWARD = 1
+BACKWARD = 2
 RIGHTMOTOR = 1
 LEFTMOTOR = 2
 
 freq = 20
-slowspeed = 50.
-fastspeed = 100.
+slowspeed = 50
+fastspeed = 100
 speed = slowspeed
 
 leftMotorP1 = 19
@@ -18,7 +20,7 @@ rightMotorP2 = 26
 
 def setSpeed(newSpeed):
     global speed
-    speed = float(newSpeed*2)
+    speed = int(newSpeed)*2
     print speed
     print newSpeed
 
@@ -109,6 +111,7 @@ def run(motor,direction,speed):
         else:
             toRunPin = rightMotorP2
             toStopPin = rightMotorP1
+    print "duty cycle will be " + str(speed) 
     pi.set_PWM_dutycycle(toRunPin,0)
     pi.set_PWM_dutycycle(toStopPin,0)
     pi.set_PWM_dutycycle(toRunPin,speed)
