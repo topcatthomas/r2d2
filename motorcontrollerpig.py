@@ -8,19 +8,19 @@ BACKWARD = 2
 RIGHTMOTOR = 1
 LEFTMOTOR = 2
 
-freq = 20
+freq = 60
 slowspeed = 50
 fastspeed = 100
 speed = slowspeed
 
-leftMotorP1 = 19
-leftMotorP2 = 21
-rightMotorP1 = 24
-rightMotorP2 = 26
+leftMotorP1 = 10
+leftMotorP2 = 9
+rightMotorP1 = 8
+rightMotorP2 = 7
 
 def setSpeed(newSpeed):
     global speed
-    speed = int(newSpeed)*2
+    speed = int(int(newSpeed)*2.5)
     print speed
     print newSpeed
 
