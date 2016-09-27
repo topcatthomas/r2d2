@@ -86,12 +86,12 @@ def init():
     pi.set_mode(leftMotorP1, pigpio.OUTPUT)
     pi.set_mode(leftMotorP2, pigpio.OUTPUT)
     pi.set_mode(rightMotorP1, pigpio.OUTPUT)
-    pi.set_mode(righttMotorP2, pigpio.OUTPUT)
+    pi.set_mode(rightMotorP2, pigpio.OUTPUT)
     # setup pwn
     pi.set_PWM_frequency(leftMotorP1, freq)
     pi.set_PWM_frequency(leftMotorP2, freq)
     pi.set_PWM_frequency(rightMotorP1,freq)
-    pi.set_PWM_frequency(righttMotorP2,freq)
+    pi.set_PWM_frequency(rightMotorP2,freq)
 
 def right():
   global speed
