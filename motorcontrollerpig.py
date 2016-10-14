@@ -1,23 +1,26 @@
-import RPi.GPIO as GPIO
+import pigpio
+
+#connect to pigpiod daemon
+pi = pigpio.pi()
 
 FORWARD = 1
 BACKWARD = 2
 RIGHTMOTOR = 1
 LEFTMOTOR = 2
 
-freq = 20
-slowspeed = 50.
-fastspeed = 100.
+freq = 60
+slowspeed = 50
+fastspeed = 100
 speed = slowspeed
 
-leftMotorP1 = None
-leftMotorP2 = None
-rightMotorP1 = None
-rightMotorP2 = None
+leftMotorP1 = 10
+leftMotorP2 = 9
+rightMotorP1 = 8
+rightMotorP2 = 7
 
 def setSpeed(newSpeed):
     global speed
-    speed = float(newSpeed)
+    speed = int(int(newSpeed)*2.5)
     print speed
     print newSpeed
 
@@ -34,7 +37,7 @@ def startPwm():
 def cleanup():
   print "cleanup called"
   stop()
-  GPIO.cleanup()
+  pi.stop()
 
 def forwards():
   global speed
@@ -47,6 +50,48 @@ def backwards():
   print "backwards called " + str(speed)
   run(LEFTMOTOR,BACKWARD,speed)
   run(RIGHTMOTOR,BACKWARD,speed)
+
+def doMove(xs,ys):
+  x = float(xs)
+  y = float(ys)
+  print 'doing a gen move x=' + str(x) + " y=" + str(y)
+  if ( abs(y-0.5) < 0.1 and abs(x-0.5) < 0.1):
+    stop()
+  else:
+    leftbit = 1-x
+    rightbit = x
+    absbit = 4*abs(y-0.5)
+    print "absbit "+str(absbit)
+    print "leftbit "+str(leftbit)
+    print "rightbit "+str(rightbit)
+    leftSpeed = int(leftbit*100*absbit)
+    rightSpeed = int(rightbit*100*absbit)
+    if ( leftSpeed > 100 ):
+       leftSpeed = 100
+    if ( rightSpeed > 100 ):
+       rightSpeed = 100
+    print "leftSpeed "+str(leftSpeed)
+    print "rightSpeed "+str(rightSpeed)
+    if ( y > 0.5 ):
+      run(LEFTMOTOR,FORWARD,leftSpeed)
+      run(RIGHTMOTOR,FORWARD,rightSpeed)
+    else:
+      run(LEFTMOTOR,BACKWARD,leftSpeed)
+      run(RIGHTMOTOR,BACKWARD,rightSpeed)
+    
+
+def init():
+    global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
+    print "init called"
+    pi.set_mode(leftMotorP1, pigpio.OUTPUT)
+    pi.set_mode(leftMotorP2, pigpio.OUTPUT)
+    pi.set_mode(rightMotorP1, pigpio.OUTPUT)
+    pi.set_mode(rightMotorP2, pigpio.OUTPUT)
+    # setup pwn
+    pi.set_PWM_frequency(leftMotorP1, freq)
+    pi.set_PWM_frequency(leftMotorP2, freq)
+    pi.set_PWM_frequency(rightMotorP1,freq)
+    pi.set_PWM_frequency(rightMotorP2,freq)
 
 def right():
   global speed
@@ -91,52 +136,6 @@ def getInnerSpeed(speed):
   else:
     return speed/2
 
-def doMove(xs,ys):
-  x = float(xs)
-  y = float(ys)
-  print 'doing a gen move x=' + str(x) + " y=" + str(y)
-  if ( abs(y-0.5) < 0.1 and abs(x-0.5) < 0.1):
-    stop()
-  else:
-    leftbit = 1-x
-    rightbit = x
-    absbit = 4*abs(y-0.5)
-    print "absbit "+str(absbit)
-    print "leftbit "+str(leftbit)
-    print "rightbit "+str(rightbit)
-    leftSpeed = int(leftbit*100*absbit)
-    rightSpeed = int(rightbit*100*absbit)
-    if ( leftSpeed > 100 ):
-       leftSpeed = 100
-    if ( rightSpeed > 100 ):
-       rightSpeed = 100
-    print "leftSpeed "+str(leftSpeed)
-    print "rightSpeed "+str(rightSpeed)
-    if ( y > 0.5 ):
-      run(LEFTMOTOR,FORWARD,leftSpeed)
-      run(RIGHTMOTOR,FORWARD,rightSpeed)
-    else:
-      run(LEFTMOTOR,BACKWARD,leftSpeed)
-      run(RIGHTMOTOR,BACKWARD,rightSpeed)
-    
-
-def init():
-    global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
-    print "init called"
-    # one time init of io
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BOARD)
-    # seup pins to be out fr motors
-    GPIO.setup(19, GPIO.OUT)
-    GPIO.setup(21, GPIO.OUT)
-    GPIO.setup(24, GPIO.OUT)
-    GPIO.setup(26, GPIO.OUT)
-    # setup pwn
-    leftMotorP1=GPIO.PWM(19, freq)
-    leftMotorP2=GPIO.PWM(21, freq)
-    rightMotorP1=GPIO.PWM(24,freq)
-    rightMotorP2=GPIO.PWM(26,freq)
-
 def run(motor,direction,speed):
     global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
     toRunPin = leftMotorP1
@@ -155,17 +154,18 @@ def run(motor,direction,speed):
         else:
             toRunPin = rightMotorP2
             toStopPin = rightMotorP1
-    toRunPin.stop()
-    toStopPin.stop()
-    toRunPin.start(speed)
+    print "duty cycle will be " + str(speed) 
+    pi.set_PWM_dutycycle(toRunPin,0)
+    pi.set_PWM_dutycycle(toStopPin,0)
+    pi.set_PWM_dutycycle(toRunPin,speed)
 
 
 def stop():
     global leftMotorP1,leftMotorP2,rightMotorP1,rightMotorP2
-    rightMotorP1.stop()
-    rightMotorP2.stop()
-    leftMotorP1.stop()
-    leftMotorP2.stop()
+    pi.set_PWM_dutycycle(rightMotorP1,0)
+    pi.set_PWM_dutycycle(rightMotorP2,0)
+    pi.set_PWM_dutycycle(leftMotorP1,0)
+    pi.set_PWM_dutycycle(leftMotorP2,0)
 
 def playAction(action,newSpeed):
     print 'playAction called'
