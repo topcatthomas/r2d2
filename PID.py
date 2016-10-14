@@ -3,6 +3,39 @@
 # PID algorithm to take input sensor readings, and target requirements, and
 # as a result feedback new rotor speeds.
 #
+# c = (E*Kp)+(Ed*Kd)+(Ei*Ki)
+# where c is the modifier to for example pwm duty
+# E is the error, ie diff between target speed and current speed
+# Ed is delta on error, so last error - current error
+# Ei sum of error
+# see http://letsmakerobots.com/node/865
+# https://studentnet.cs.manchester.ac.uk/resources/library/thesis_abstracts/MSc14/FullText/Ioannidis-Feidias-fulltext.pdf
+# http://stackoverflow.com/questions/25897723/pid-controller-for-dc-motor
+#import PID
+#import time
+#
+#dc_pid = PID.PID(2.5, .1, 1.5)
+#
+#
+#GPIO.setmode(GPIO.BOARD)
+#GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#GPIO.add_event_detect(22, GPIO.FALLING, callback=self.interrupt_function,bouncetime=5) #GPIO where encoders signal is conected
+#
+#
+#def interrupt_function():
+#
+#   """on this function you make calculations depending on what PID you are planning to use , for example if you are planning to do a Velocity PID , and the encoder signal is connected to a GPIO pin you should take time stamps and convert signal frecuency to velocity , save it as a variable and #then update that value to the PID controller"""
+#   error = dc_pid.update(velocity) 
+#   #once you get your error you actuate it to your DC motor , via PWM , previously mapped function depending on your dc motor voltage and velocity it has depending on the PWM's duty cycle
+#   pwm.ChangeDutyCycle(error/15) # or whatever your convertion is 
+#
+#
+#readings = [1, 3, 5, 7, 12, 15, 17, 19, 27, 24, 24, 26]
+#initial_time = time.time
+#for reading in readings:
+#    dc_pid.setPoint(reading)
+#    time.sleep(10)
+#
 ############################################################################################
 class PID:
 
