@@ -4,7 +4,7 @@ import linearsensorpigpio as lin
 impoirt PID
 
 motorpin = 3
-speed =175 
+speed = 100 
 slowspeed = 75
 emergencyStop = False
 
@@ -52,7 +52,7 @@ def targetCallBack(pos):
        motor.setSpeed(0)
     else:
        #motor.setSpeed(slowspeed)
-       [p_out, i_out, d_out] = pid.Compute(motor.getSpeed(), 100, time.clock())
+       [p_out, i_out, d_out] = pid.Compute(motor.getSpeed(), speed, time.clock())
        print str(motor.getSpeed()+p_out+d_out)+str(motor.getSpeed()) " " +  str(p_out) + " " + str(d_out)
        motor.setSpeed(motor.getSpeed()+p_out+d_out)
 
